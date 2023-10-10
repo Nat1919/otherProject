@@ -50,34 +50,27 @@ public class Calculator {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Введите выражение в строку");
-        int number1 = 0;
-        int number2 = 0;
+
         String expression = scanner.nextLine();
         operation = expression.charAt(1);
         String[] arrayWithElements = expression.split("[+-/*]");
         String element01 = arrayWithElements[0].trim();
         String element02 = arrayWithElements[1].trim();
         int result = 0;
-        boolean b = isRome(roman, element02) == isRome(roman, element01);
-        boolean a = isRome(roman, element01);
 
-        boolean d = isArabian(arrayNum, element02) == isArabian(arrayNum, element01);
-        boolean c = isArabian(arrayNum, element02);
-        if (a && b) {
-            number1 = romanToNumber(element01);
-            number2 = romanToNumber(element02);
-            result = calculated(number1, number2, operation);
+        if (isRome(roman, element01) && isRome(roman, element02) == isRome(roman, element01) ) {
+            result = calculated(romanToNumber(element01),romanToNumber(element02), operation);
             String newResult = convertNumToRoman(result);
             System.out.println("результат = " + newResult);
         }
-        if (a && c) {
+        else if (isRome(roman,element01) && isArabian(arrayNum,element02) || isArabian(arrayNum,element01) && isRome(roman,element02)) {
             throw new Exception("используются одновременно разные форматы счисления.");
         }
-        if (c && d) {
-            number1 = Integer.parseInt(element01);
-            number2 = Integer.parseInt(element02);
-            result = calculated(number1, number2, operation);
+        else if (isArabian(arrayNum,element01 ) && isArabian(arrayNum,element01) == isArabian(arrayNum,element02)) {
+            result = calculated( Integer.parseInt(element01), Integer.parseInt(element02), operation);
             System.out.println("результат = " + result);
+        }else{
+            throw new Exception("данная операция не является математической");
         }
 
     }
